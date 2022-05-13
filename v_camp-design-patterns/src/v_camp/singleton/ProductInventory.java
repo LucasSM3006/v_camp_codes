@@ -15,7 +15,7 @@ public class ProductInventory {
 		return INSTANCE;
 	}
 	
-	private List<Product> products = new ArrayList<Product>();
+	private static List<Product> products = new ArrayList<Product>();
 	
 	public void addProduct(Product product) {
 		this.products.add(product);
@@ -25,7 +25,7 @@ public class ProductInventory {
 		return products;
 	};
 	
-	public void removeProductFromStock(int sku, int quantity) {
+	public void removeProductsFromStock(int sku, int quantity) {
 		List<Product> productsToRemove = new ArrayList<Product>();
 		//Goes through the products list and finds the same sku.
 		for(Product prod : products) {
@@ -42,12 +42,17 @@ public class ProductInventory {
 	
 	public void blockProductsFromStock(int sku, int quantity) {
 		List<Product> productsToBlock = new ArrayList<Product>();
+		
 		for(Product prod : products) {
+			if(prod.getAvailable() == false) {
+				continue;
+			}
 			if (productsToBlock.size() == quantity) {
 				break;
 			}
 			if (prod.getSku() == sku) {
 				prod.setAvailable(false);
+				productsToBlock.add(prod);
 			}
 		}
 	}

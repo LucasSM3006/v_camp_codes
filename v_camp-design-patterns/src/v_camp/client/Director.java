@@ -1,7 +1,6 @@
 package v_camp.client;
 
 import v_camp.builder.BookBuilder;
-import v_camp.builder.Builder;
 import v_camp.builder.ComputerBuilder;
 import v_camp.builder.ShoeBuilder;
 import v_camp.builder.SkirtBuilder;

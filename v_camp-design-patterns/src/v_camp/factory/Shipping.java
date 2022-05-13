@@ -1,5 +1,6 @@
 package v_camp.factory;
 
-public class Shipping {
-
+public abstract class Shipping {
+	
+	public abstract String getShippingMethod();
 }
