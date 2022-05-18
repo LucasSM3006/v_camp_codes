@@ -2,10 +2,17 @@ package v_camp.factory;
 
 public abstract class ShippingCreator {
 
-	public Shipping getShipping() {
-		Shipping shipping = createShipping();
+	public static Shipping getShipping(double totalWeight) {		
+		ShippingCreator shippingMethod;
 		
-		return shipping;
+		if(totalWeight > 10.0) {
+			shippingMethod = new RoadShippingCreator();
+			return shippingMethod.createShipping();
+		}
+		else {
+			shippingMethod = new AeroShippingCreator();
+			return shippingMethod.createShipping();
+		}
 	}
 	
 	public abstract Shipping createShipping();

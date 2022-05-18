@@ -13,90 +13,96 @@ import v_camp.builder.entities.Product;
 import v_camp.builder.entities.Shoe;
 import v_camp.builder.entities.Skirt;
 import v_camp.composite.Cart;
+import v_camp.facade.Order;
 import v_camp.factory.AeroShippingCreator;
 import v_camp.factory.RoadShippingCreator;
 import v_camp.factory.Shipping;
 import v_camp.factory.ShippingCreator;
+import v_camp.iterator.OrderList;
 import v_camp.singleton.ProductInventory;
 
 public class Client {
 	public static void main(String[] args) {
 		//Director
-		Director director = new Director();
-		
-		//Builders
-		BookBuilder bbuilder = new BookBuilder();
-		ComputerBuilder cbuilder = new ComputerBuilder();
-		ShoeBuilder shbuilder = new ShoeBuilder();
-		SkirtBuilder skbuilder = new SkirtBuilder();
-		
-		//Product inventory
-		ProductInventory inventory = ProductInventory.getInstance();
-		
-		//Entities
-		Book book[] = new Book[10];
-		Computer computer[] = new Computer[10];
-		Skirt skirt[] = new Skirt[10];
-		Shoe shoe[] = new Shoe[10];
-		
-		//Instantiating the entities
-		for(int i = 0; i < 10; i++) {
-			List<Product> catalogProducts = new ArrayList<Product>();
-			
-			director.constructBook(bbuilder);
-			book[i] = bbuilder.getResult();
-			
-			director.constructComputer(cbuilder);
-			computer[i] = cbuilder.getResult();
-			
-			director.constructShoe(shbuilder);
-			shoe[i] = shbuilder.getResult();
-			
-			director.constructSkirt(skbuilder);
-			skirt[i] = skbuilder.getResult();
-			
-			inventory.addProduct(book[i]);
-			inventory.addProduct(computer[i]);
-			inventory.addProduct(skirt[i]);
-			inventory.addProduct(shoe[i]);
-		}
+		ProductInventory inventory = (ProductInventory) ClientProducts.createList();
 		
 		Cart cart = new Cart();
-		System.out.println(cart.getAmountOfProductsInCart());
+		Cart cart2 = new Cart();
 		
-		Shipping shippingMethod;
+		//Blocking products.
+		//inventory.blockProductsFromStock(1, 0);
+		//inventory.blockProductsFromStock(2, 0);
+		//inventory.blockProductsFromStock(3, 0);
+		//inventory.blockProductsFromStock(4, 0);
 		
-		inventory.blockProductsFromStock(1, 9);
-		inventory.blockProductsFromStock(2, 5);
-		inventory.blockProductsFromStock(3, 9);
-		inventory.blockProductsFromStock(4, 9);
+		//Filling up the cart.
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
 		
-		for(Product product : inventory.getProductQuantity()) {
-			System.out.println(product.getAvailable());
-			
-			if(product.getAvailable() == true) {
-				cart.addProductToCart(product);
-			}
-		}
+		cart2.addProductToCart(inventory.getProduct(4));
+		cart2.addProductToCart(inventory.getProduct(1));
 		
-		if(cart.getWeight() > 10.0) {
-			shippingMethod = createShippingMethod(new RoadShippingCreator());
-		}
-		else {
-			shippingMethod = createShippingMethod(new AeroShippingCreator());
-		}
-		int priceToAdd = cart.getAmountOfProductsInCart();
-		cart.setShippingPrice(priceToAdd);
-		
-		System.out.println(Catalog.getCatalog());
-		System.out.println(shippingMethod.getShippingMethod());
-		System.out.println(cart.getAmountOfProductsInCart());
-		System.out.println(cart.getWeight());
-		System.out.println("USD " + priceToAdd);
-	}
+		//for(Product product : inventory.getProductQuantity()) {
+		//	cart.addProductToCart(product);
+		//}
 	
-	public static Shipping createShippingMethod(ShippingCreator creator) {
-		Shipping shipping = creator.getShipping();
-		return shipping;
+		//int priceToAdd = cart.getAmountOfProductsInCart();
+		
+		//System.out.println(Catalog.getCatalog());
+		//System.out.println("Cart information:");
+		//System.out.println("Shipping Method: " + cart.getShippingMethod().getShippingMethod());
+		//System.out.println("Products in Cart: " + cart.getAmountOfProductsInCart());
+		//System.out.println("Weight (Kg): " + cart.getWeight());
+		//System.out.println("Cart Price (USD): " + cart.getTotal());
+		//System.out.println("Cart Price w/ Shipping (USD): " + cart.getTotalPlusShipping());
+		
+		OrderList orderList = OrderList.getInstance();
+		Order order1 = new Order(cart);
+		Order order2 = new Order(cart2);
+		
+		orderList.addOrder(order1);
+		orderList.addOrder(order2);
+		
+		while(orderList.hasNext()) {
+			Order order = orderList.next();
+			Cart ordrCart = order.getCart();
+			order.changeStatusToPaid();
+			
+			double totalPrice = ordrCart.getTotalPlusShipping();
+			Shipping shipMethod = ordrCart.getShippingMethod();
+			String shipping = shipMethod.getShippingMethod();
+			
+			System.out.println("Order status: " + order.getStatus());
+			System.out.print("Total + Shipping: " + totalPrice);
+			System.out.println(" USD");
+			System.out.println("Weight: " + ordrCart.getWeight());
+			System.out.println("Shipping Method: " + shipping);
+			System.out.println("");
+		}
+		
+		for(Product prod : inventory.getListOfProducts()) {
+			System.out.println(prod.getAvailable());
+		};
+			System.out.println("");
+			
+			orderList.reset(); //Resets the postion on the OrderList.
+		while(orderList.hasNext()) {
+			Order order = orderList.next();
+			order.changeStatusToCancelled();
+
+			System.out.println("Order status: " + order.getStatus());
+		}
+		
+		for(Product prod : inventory.getListOfProducts()) {
+			System.out.println(prod.getAvailable());
+		};
 	}
 }

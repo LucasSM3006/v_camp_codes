@@ -21,13 +21,35 @@ public class ProductInventory {
 		this.products.add(product);
 	}
 	
-	public List<Product> getProductQuantity() {
+	public List<Product> getListOfProducts() {
 		return products;
-	};
+	}
+	
+	public Product getProduct(int sku) {
+		for(Product prod : products) {
+			if(prod.getSku() == sku) {
+				if(prod.getAvailable() == true) {
+					return prod;
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		return null;
+	}
 	
 	public void removeProductsFromStock(int sku, int quantity) {
 		List<Product> productsToRemove = new ArrayList<Product>();
 		//Goes through the products list and finds the same sku.
+		for(Product prod : products) {
+			if(prod.getSku() == sku) {
+				if(prod.getAvailable() == false) {
+					products.remove(prod);
+					break;
+				}
+			}
+		}
 		for(Product prod : products) {
 			if (productsToRemove.size() == quantity) {
 				break;
@@ -41,18 +63,27 @@ public class ProductInventory {
 	}
 	
 	public void blockProductsFromStock(int sku, int quantity) {
-		List<Product> productsToBlock = new ArrayList<Product>();
+		int count = 0;
 		
 		for(Product prod : products) {
-			if(prod.getAvailable() == false) {
-				continue;
-			}
-			if (productsToBlock.size() == quantity) {
-				break;
-			}
-			if (prod.getSku() == sku) {
+			if(count == quantity) break;
+			if(prod.getAvailable() == false) continue;
+			if(prod.getSku() == sku) {
 				prod.setAvailable(false);
-				productsToBlock.add(prod);
+				count++;
+			}
+		}
+	}
+	
+	public void unblockProductsFromStock(int sku, int quantity) {
+		int count = 0;
+		
+		for(Product prod : products) {
+			if(count == quantity) break;
+			if(prod.getAvailable() == true) continue;
+			if(prod.getSku() == sku) {
+				prod.setAvailable(true);
+				count++;
 			}
 		}
 	}
