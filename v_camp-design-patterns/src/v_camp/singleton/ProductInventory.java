@@ -40,9 +40,11 @@ public class ProductInventory {
 	}
 	
 	public void removeProductsFromStock(int sku, int quantity) {
-		List<Product> productsToRemove = new ArrayList<Product>();
+//		List<Product> productsToRemove = new ArrayList<Product>();
+		int count = 0;
 		//Goes through the products list and finds the same sku.
 		for(Product prod : products) {
+			if(count == quantity) break;
 			if(prod.getSku() == sku) {
 				if(prod.getAvailable() == false) {
 					products.remove(prod);
@@ -50,16 +52,15 @@ public class ProductInventory {
 				}
 			}
 		}
-		for(Product prod : products) {
-			if (productsToRemove.size() == quantity) {
-				break;
-			}
-			if(prod.getSku() == sku) {
-				productsToRemove.add(prod);
-			}
-		}
-		//Removes all objects inside that match.
-		products.removeAll(productsToRemove);
+//		for(Product prod : products) {
+//			if (productsToRemove.size() == quantity) {
+//				break;
+//			}
+//			if(prod.getSku() == sku) {
+//				productsToRemove.add(prod);
+//			}
+//		}
+//		products.removeAll(productsToRemove);
 	}
 	
 	public void blockProductsFromStock(int sku, int quantity) {
