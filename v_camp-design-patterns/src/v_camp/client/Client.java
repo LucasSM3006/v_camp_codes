@@ -46,6 +46,8 @@ public class Client {
 		cart.addProductToCart(inventory.getProduct(2));
 		cart.addProductToCart(inventory.getProduct(2));
 		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
+		cart.addProductToCart(inventory.getProduct(2));
 		
 		cart2.addProductToCart(inventory.getProduct(4));
 		cart2.addProductToCart(inventory.getProduct(1));
@@ -74,7 +76,7 @@ public class Client {
 		while(orderList.hasNext()) {
 			Order order = orderList.next();
 			Cart ordrCart = order.getCart();
-			order.changeStatusToPaid();
+			//order.changeStatusToPaid();
 			
 			double totalPrice = ordrCart.getTotalPlusShipping();
 			Shipping shipMethod = ordrCart.getShippingMethod();
@@ -88,20 +90,36 @@ public class Client {
 			System.out.println("");
 		}
 		
-		for(Product prod : inventory.getListOfProducts()) {
-			System.out.println(prod.getAvailable());
-		};
-			System.out.println("");
+//		for(Product prod : inventory.getListOfProducts()) {
+//			System.out.println("Available: " + prod.getAvailable());
+//		};
+//		
+//		for(Product prod : order1.getCart().getProducts()) {
+//			System.out.println(prod);
+//		}
 			
 			orderList.reset(); //Resets the postion on the OrderList.
 		while(orderList.hasNext()) {
 			Order order = orderList.next();
-			order.changeStatusToCancelled();
+			//order.changeStatusToShipped();
 
 			System.out.println("Order status: " + order.getStatus());
 		}
 		
+		List<Product> listcart1 = order1.getCart().getProducts();
+		
+		System.out.println("");
 		for(Product prod : inventory.getListOfProducts()) {
+			order1.getCart().removeProductFromCart(prod);			
+		}
+		
+		System.out.println("");
+		
+		for(Product prod : order1.getCart().getProducts()) {
+			System.out.println(prod.getAvailable());
+		}
+		
+		for(Product prod : order2.getCart().getProducts()) {
 			System.out.println(prod.getAvailable());
 		};
 	}
