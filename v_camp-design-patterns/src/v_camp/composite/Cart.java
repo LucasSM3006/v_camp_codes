@@ -6,6 +6,7 @@ import java.util.List;
 import v_camp.builder.entities.Product;
 import v_camp.factory.Shipping;
 import v_camp.factory.ShippingCreator;
+import v_camp.singleton.ProductInventory;
 
 public class Cart {
 	private List<Product> products = new ArrayList<Product>();
@@ -23,8 +24,20 @@ public class Cart {
 		}
 		else {
 			products.add(product);
-			//product.setAvailable(false); Old method.
+			product.setAvailable(false);
 		}
+	}
+	
+	public void removeProductFromCart(Product product) {
+		ProductInventory inventory = ProductInventory.getInstance();
+		
+		for(int i = 0; i < products.size(); i++) {
+			if(product.getSku() == products.get(i).getSku()) {
+				inventory.unblockProductsFromStock(product.getSku(), 1);
+			}
+		}
+		
+		products.remove(product);
 	}
 	
 	public List<Product> getProducts() {
