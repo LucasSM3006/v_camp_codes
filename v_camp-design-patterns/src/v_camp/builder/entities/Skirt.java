@@ -4,8 +4,8 @@ public class Skirt extends Product {
 	private int size;
 	private String brand;
 
-	public Skirt(double weight, double price, int sku, int size, String brand) {
-		super(weight, price, sku);
+	public Skirt(double weight, double price, int sku, ProductType type, int size, String brand) {
+		super(weight, price, sku, type);
 		this.size = size;
 		this.brand = brand;
 	}

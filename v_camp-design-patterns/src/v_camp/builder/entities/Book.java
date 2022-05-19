@@ -4,8 +4,8 @@ public class Book extends Product {
 	private String bookName;
 	private int pageCount;
 	
-	public Book(double weight, double price, int sku, String bookName, int pageCount) {
-		super(weight, price, sku);
+	public Book(double weight, double price, int sku, ProductType type, String bookName, int pageCount) {
+		super(weight, price, sku, type);
 		this.bookName = bookName;
 		this.pageCount = pageCount;
 	}

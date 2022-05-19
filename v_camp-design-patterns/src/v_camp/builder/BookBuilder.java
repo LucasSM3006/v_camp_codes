@@ -1,6 +1,7 @@
 package v_camp.builder;
 
 import v_camp.builder.entities.Book;
+import v_camp.builder.entities.ProductType;
 
 public class BookBuilder implements Builder {
 	private double weight;
@@ -35,6 +36,6 @@ public class BookBuilder implements Builder {
 	}
 	
 	public Book getResult() {
-		return new Book(weight, price, sku, bookName, pageCount);
+		return new Book(weight, price, sku, ProductType.Book, bookName, pageCount);
 	}
 }

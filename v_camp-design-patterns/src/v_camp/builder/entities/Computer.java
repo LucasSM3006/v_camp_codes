@@ -5,8 +5,8 @@ public class Computer extends Product {
 	private String processor;
 	private String graphicsCard;
 
-	public Computer(double weight, double price, int sku, String processor, String graphicsCard) {
-		super(weight, price, sku);
+	public Computer(double weight, double price, int sku, ProductType type, String processor, String graphicsCard) {
+		super(weight, price, sku, type);
 		this.processor = processor;
 		this.graphicsCard = graphicsCard;
 	}

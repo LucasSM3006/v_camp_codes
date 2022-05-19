@@ -4,8 +4,8 @@ public class Shoe extends Product {
 	private double sizeUS;
 	private String material;
 	
-	public Shoe(double weight, double price, int sku, double sizeUS, String material) {
-		super(weight, price, sku);
+	public Shoe(double weight, double price, int sku, ProductType type, double sizeUS, String material) {
+		super(weight, price, sku, type);
 		this.sizeUS = sizeUS;
 		this.material = material;
 	}

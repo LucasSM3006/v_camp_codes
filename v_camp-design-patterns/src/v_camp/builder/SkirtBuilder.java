@@ -1,5 +1,6 @@
 package v_camp.builder;
 
+import v_camp.builder.entities.ProductType;
 import v_camp.builder.entities.Skirt;
 
 public class SkirtBuilder implements Builder {
@@ -35,6 +36,6 @@ public class SkirtBuilder implements Builder {
 	}
 	
 	public Skirt getResult() {
-		return new Skirt(weight, price, sku, size, brand);
+		return new Skirt(weight, price, sku, ProductType.Skirt,size, brand);
 	}
 }

@@ -5,12 +5,14 @@ public class Product {
 	private double price;
 	private int sku;
 	private boolean available = true;
+	private ProductType type;
 	
-	public Product(double weight, double price, int sku) {
+	public Product(double weight, double price, int sku, ProductType type) {
 		super();
 		this.weight = weight;
 		this.price = price;
 		this.sku = sku;
+		this.type = type;
 	}
 	
 	public double getWeight() {
@@ -36,5 +38,8 @@ public class Product {
 	}
 	public void setAvailable(boolean available) {
 		this.available = available;
+	}
+	public ProductType getProductType() {
+		return this.type;
 	}
 }

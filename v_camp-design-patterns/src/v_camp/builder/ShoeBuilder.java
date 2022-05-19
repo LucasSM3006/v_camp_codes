@@ -1,5 +1,6 @@
 package v_camp.builder;
 
+import v_camp.builder.entities.ProductType;
 import v_camp.builder.entities.Shoe;
 
 public class ShoeBuilder implements Builder {
@@ -35,6 +36,6 @@ public class ShoeBuilder implements Builder {
 	}
 	
 	public Shoe getResult() {
-		return new Shoe(weight, price, sku, sizeUS, material);
+		return new Shoe(weight, price, sku, ProductType.Shoe, sizeUS, material);
 	}
 }

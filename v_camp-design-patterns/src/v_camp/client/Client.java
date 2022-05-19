@@ -19,6 +19,10 @@ import v_camp.factory.RoadShippingCreator;
 import v_camp.factory.Shipping;
 import v_camp.factory.ShippingCreator;
 import v_camp.iterator.OrderList;
+import v_camp.observer.BackOffice;
+import v_camp.observer.CartObserver;
+import v_camp.observer.ShippingObserver;
+import v_camp.observer.StatusObserver;
 import v_camp.singleton.ProductInventory;
 
 public class Client {
@@ -46,11 +50,13 @@ public class Client {
 		cart.addProductToCart(inventory.getProduct(2));
 		cart.addProductToCart(inventory.getProduct(2));
 		cart.addProductToCart(inventory.getProduct(2));
-		cart.addProductToCart(inventory.getProduct(2));
-		cart.addProductToCart(inventory.getProduct(2));
+		//cart.addProductToCart(inventory.getProduct(2));
+		//cart.removeProductFromCart(2, 1);
+		//cart.addProductToCart(inventory.getProduct(2));
 		
 		cart2.addProductToCart(inventory.getProduct(4));
 		cart2.addProductToCart(inventory.getProduct(1));
+		
 		
 		//for(Product product : inventory.getProductQuantity()) {
 		//	cart.addProductToCart(product);
@@ -109,18 +115,37 @@ public class Client {
 		List<Product> listcart1 = order1.getCart().getProducts();
 		
 		System.out.println("");
-		for(Product prod : inventory.getListOfProducts()) {
-			order1.getCart().removeProductFromCart(prod);			
-		}
+		
+		//Remove all products from the cart.
+//		for(Product prod : inventory.getListOfProducts()) {
+//			order1.getCart().removeProductFromCart(prod.getSku(), 1);			
+//		}
 		
 		System.out.println("");
 		
 		for(Product prod : order1.getCart().getProducts()) {
 			System.out.println(prod.getAvailable());
+			System.out.println("Type: " + prod.getProductType());
 		}
+		
+		System.out.println("");
 		
 		for(Product prod : order2.getCart().getProducts()) {
 			System.out.println(prod.getAvailable());
 		};
+		System.out.println(order1.getOrderId());
+		System.out.println(order2.getOrderId());
+		
+		CartObserver cartObs = new CartObserver();
+		ShippingObserver shippingObs = new ShippingObserver();
+		StatusObserver statusObs = new StatusObserver();
+//		BackOffice orderRender = new BackOffice();
+//		
+		order1.attach(cartObs);
+		order1.attach(shippingObs);
+		order1.attach(statusObs);
+		order2.attach(statusObs);
+		
+		order1.changeStatusToCompleted();
 	}
 }

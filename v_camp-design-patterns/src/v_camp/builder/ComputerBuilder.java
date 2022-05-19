@@ -1,6 +1,7 @@
 package v_camp.builder;
 
 import v_camp.builder.entities.Computer;
+import v_camp.builder.entities.ProductType;
 
 public class ComputerBuilder implements Builder {
 	private double weight;
@@ -35,6 +36,6 @@ public class ComputerBuilder implements Builder {
 	}
 	
 	public Computer getResult() {
-		return new Computer(weight, price, sku, cpu, gpu);
+		return new Computer(weight, price, sku,ProductType.Computer ,cpu, gpu);
 	}
 }
