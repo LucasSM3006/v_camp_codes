@@ -8,6 +8,7 @@ import v_camp.composite.Cart;
 import v_camp.factory.Shipping;
 import v_camp.observer.BackOffice;
 import v_camp.observer.Observer;
+import v_camp.observer.ShippingObserver;
 import v_camp.singleton.ProductInventory;
 
 public class Order {
@@ -20,6 +21,7 @@ public class Order {
 	private int orderId;
 	
 	private List<Observer> observers = new ArrayList<>();
+	private List<ShippingObserver> shippingObservers = new ArrayList<>();
 	
 	public Order(Cart cart) {
 		this.cart = cart;
@@ -34,8 +36,16 @@ public class Order {
 		observers.add(observer);
 	}
 	
+	public void attach(ShippingObserver so) {
+		shippingObservers.add(so);
+	}
+	
 	public void dettach(Observer observer) {
 		observers.remove(observer);
+	}
+	
+	public void dettach(ShippingObserver so) {
+		shippingObservers.remove(so);
 	}
 	
 	public void changeStatusToPending() {
@@ -43,39 +53,51 @@ public class Order {
 	}
 	
 	public void changeStatusToPaid() {
-		this.status = "Paid";
-		
-		for(Product prod : products) {
-			productInventory.blockProductsFromStock(prod.getSku(), 1);
+		if(this.status == "Paid");
+		else {
+			this.status = "Paid";
+			
+			for(Product prod : products) {
+				productInventory.blockProductsFromStock(prod.getSku(), 1);
+			}
+			
+			observers.forEach(o->o.updated(this));
 		}
-		
-		observers.forEach(o->o.updated(this));
 	}
 	
 	public void changeStatusToShipped() {
-		this.status = "Shipped";
-		
-		for(Product prod : products) {
-			productInventory.removeProductsFromStock(prod.getSku(), 1);
+		if(this.status == "Shipped");
+		else {
+			this.status = "Shipped";
+			
+			for(Product prod : products) {
+				productInventory.removeProductsFromStock(prod.getSku(), 1);
+			}
+			
+			observers.forEach(o->o.updated(this));
 		}
-		
-		observers.forEach(o->o.updated(this));
 	}
 	
 	public void changeStatusToCompleted() {
-		this.status = "Completed";
-		
-		observers.forEach(o->o.updated(this));
+		if(this.status == "Completed");
+		else {
+			this.status = "Completed";
+			
+			observers.forEach(o->o.updated(this));
+		}
 	}
 	
 	public void changeStatusToCancelled() {
-		this.status = "Cancelled";
-		
-		for(Product prod : products) {
-			productInventory.unblockProductsFromStock(prod.getSku(), 1);
+		if(this.status == "Cancelled");
+		else {
+			this.status = "Cancelled";
+			
+			for(Product prod : products) {
+				productInventory.unblockProductsFromStock(prod.getSku(), 1);
+			}
+			
+			observers.forEach(o->o.updated(this));
 		}
-		
-		observers.forEach(o->o.updated(this));
 	}
 
 	public Cart getCart() {
@@ -87,11 +109,11 @@ public class Order {
 	}
 
 	public Shipping getShipping() {
-		return this.shipping = this.cart.getShippingMethod();
-	}
-
-	public void setShipping(Shipping shipping) {
-		this.shipping = shipping;
+		if(this.shipping.getShippingMethod() != this.cart.getShippingMethod().getShippingMethod()) {
+			shippingObservers.forEach(o->o.updated(this));
+		}
+		this.shipping = this.cart.getShippingMethod();
+		return this.shipping;
 	}
 
 	public String getStatus() {

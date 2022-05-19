@@ -2,18 +2,34 @@ package v_camp.composite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import v_camp.builder.entities.Product;
 import v_camp.factory.Shipping;
 import v_camp.factory.ShippingCreator;
+import v_camp.observer.CartObserver;
+import v_camp.observer.Observer;
 import v_camp.singleton.ProductInventory;
 
 public class Cart {
+	//To control the switch on the observer.
+	static final int ADDED = 1;
+	static final int REMOVED = 2;
 	private List<Product> products = new ArrayList<Product>();
 	
 	private double shippingPrice;
 	
 	private Shipping shipping;
+	
+	private List<CartObserver> observers = new ArrayList<>();
+	
+	public void attach(CartObserver observer) {
+		observers.add(observer);
+	}
+	
+	public void dettach(CartObserver observer) {
+		observers.remove(observer);
+	}
 	
 	public void addProductToCart(Product product) {
 		if(product == null) {
@@ -25,6 +41,7 @@ public class Cart {
 		else {
 			products.add(product);
 			product.setAvailable(false);
+			observers.forEach(o->o.updated(product, ADDED));
 		}
 	}
 	
@@ -42,20 +59,23 @@ public class Cart {
 	
 	public void removeProductFromCart(int sku, int quantity) {
 		ProductInventory inventory = ProductInventory.getInstance();
+		List<Product> p = new ArrayList<>();
+		AtomicInteger count = new AtomicInteger(0);
 		
-		int amountOfItems = getAmountOfProductsInCart();
-		int count = 0;
-		
-		for(int i = 0; i < amountOfItems; i++) {
-			Product productBeingChecked = products.get(i);
-			
-			if(quantity >= count) break;
-			if(sku == productBeingChecked.getSku()) {
-				inventory.unblockProductsFromStock(productBeingChecked.getSku(), 1);
-				products.remove(productBeingChecked);
-				count++;
+		products.forEach(product->{
+			if(product.getSku() == sku && count.get() < quantity) {
+				inventory.unblockProductsFromStock(sku, 1);
+				count.incrementAndGet();
+				observers.forEach(o->o.updated(product, REMOVED));
 			}
+			else {
+				p.add(product);
+			}
+		});
+		if(count.get() != quantity) {
+			System.out.println("Could not remove desired quantity.");
 		}
+		products = p;
 	}
 	
 	public List<Product> getProducts() {

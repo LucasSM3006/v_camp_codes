@@ -10,5 +10,4 @@ public class StatusObserver implements Observer {
 		
 		System.out.println("Order N" + order.getOrderId() + " status has changed to: " + status);
 	}
-
 }

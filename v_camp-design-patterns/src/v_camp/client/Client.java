@@ -33,6 +33,14 @@ public class Client {
 		Cart cart = new Cart();
 		Cart cart2 = new Cart();
 		
+		CartObserver cartObs = new CartObserver();
+		ShippingObserver shippingObs = new ShippingObserver();
+		StatusObserver statusObs = new StatusObserver();
+		BackOffice orderRender = new BackOffice();
+		
+		cart.attach(cartObs);
+		cart2.attach(cartObs);
+		
 		//Blocking products.
 		//inventory.blockProductsFromStock(1, 0);
 		//inventory.blockProductsFromStock(2, 0);
@@ -51,7 +59,7 @@ public class Client {
 		cart.addProductToCart(inventory.getProduct(2));
 		cart.addProductToCart(inventory.getProduct(2));
 		//cart.addProductToCart(inventory.getProduct(2));
-		//cart.removeProductFromCart(2, 1);
+		cart.removeProductFromCart(2, 1);
 		//cart.addProductToCart(inventory.getProduct(2));
 		
 		cart2.addProductToCart(inventory.getProduct(4));
@@ -133,19 +141,20 @@ public class Client {
 		for(Product prod : order2.getCart().getProducts()) {
 			System.out.println(prod.getAvailable());
 		};
-		System.out.println(order1.getOrderId());
-		System.out.println(order2.getOrderId());
-		
-		CartObserver cartObs = new CartObserver();
-		ShippingObserver shippingObs = new ShippingObserver();
-		StatusObserver statusObs = new StatusObserver();
-//		BackOffice orderRender = new BackOffice();
-//		
-		order1.attach(cartObs);
+//		System.out.println(order1.getOrderId());
+//		System.out.println(order2.getOrderId());
 		order1.attach(shippingObs);
 		order1.attach(statusObs);
 		order2.attach(statusObs);
 		
-		order1.changeStatusToCompleted();
+		order1.getCart().removeProductFromCart(2, 5);
+		order1.getCart().removeProductFromCart(2, 3);
+		for(Product prod : inventory.getListOfProducts()) {
+			System.out.println(prod.getAvailable());
+			System.out.println("Type: " + prod.getProductType());
+		}
+		
+		System.out.println(order1.getShipping());
+		System.out.println(order1.getShipping());
 	}
 }
