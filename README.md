@@ -2,7 +2,7 @@
 
 This is an exercise made for V_Camp.
 It's purpose is to test our knowledge in the SOLID principles and multiple design patterns.
-These are the patterns we must apply in this exercise:
+These are the patterns we have to apply in this exercise:
 - Builder
 - Singleton
 - Composite
