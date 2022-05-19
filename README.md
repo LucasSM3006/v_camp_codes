@@ -16,4 +16,4 @@ These are the patterns we must apply in this exercise:
 A brief description of the scenario:
 
 It's a made-up e-commerce/commerce platform and it will have to do and follow certain rules.
-We, as the platform's developers, must develop a simple simulation of the project.
+We, as the platforms developers, must develop a simple simulation/use case of the project.
