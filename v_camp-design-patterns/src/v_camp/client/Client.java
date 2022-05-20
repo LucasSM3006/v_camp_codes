@@ -36,11 +36,20 @@ public class Client {
 		CartObserver cartObs = new CartObserver();
 		ShippingObserver shippingObs = new ShippingObserver();
 		StatusObserver statusObs = new StatusObserver();
-		BackOffice orderRender = new BackOffice();
 		
 		cart.attach(cartObs);
 		cart2.attach(cartObs);
 		
+		OrderList orderList = OrderList.getInstance();
+		Order order1 = new Order(cart);
+		Order order2 = new Order(cart2);
+		
+		order1.attach(shippingObs);
+		order1.attach(statusObs);
+		order2.attach(statusObs);
+		
+		orderList.addOrder(order1);
+		orderList.addOrder(order2);
 		//Blocking products.
 		//inventory.blockProductsFromStock(1, 0);
 		//inventory.blockProductsFromStock(2, 0);
@@ -80,29 +89,23 @@ public class Client {
 		//System.out.println("Cart Price (USD): " + cart.getTotal());
 		//System.out.println("Cart Price w/ Shipping (USD): " + cart.getTotalPlusShipping());
 		
-		OrderList orderList = OrderList.getInstance();
-		Order order1 = new Order(cart);
-		Order order2 = new Order(cart2);
 		
-		orderList.addOrder(order1);
-		orderList.addOrder(order2);
-		
-		while(orderList.hasNext()) {
-			Order order = orderList.next();
-			Cart ordrCart = order.getCart();
-			//order.changeStatusToPaid();
-			
-			double totalPrice = ordrCart.getTotalPlusShipping();
-			Shipping shipMethod = ordrCart.getShippingMethod();
-			String shipping = shipMethod.getShippingMethod();
-			
-			System.out.println("Order status: " + order.getStatus());
-			System.out.print("Total + Shipping: " + totalPrice);
-			System.out.println(" USD");
-			System.out.println("Weight: " + ordrCart.getWeight());
-			System.out.println("Shipping Method: " + shipping);
-			System.out.println("");
-		}
+//		while(orderList.hasNext()) {
+//			Order order = orderList.next();
+//			Cart ordrCart = order.getCart();
+//			//order.changeStatusToPaid();
+//			
+//			double totalPrice = ordrCart.getTotalPlusShipping();
+//			Shipping shipMethod = ordrCart.getShippingMethod();
+//			String shipping = shipMethod.getShippingMethod();
+//			
+//			System.out.println("Order status: " + order.getStatus());
+//			System.out.print("Total + Shipping: " + totalPrice);
+//			System.out.println(" USD");
+//			System.out.println("Weight: " + ordrCart.getWeight());
+//			System.out.println("Shipping Method: " + shipping);
+//			System.out.println("");
+//		}
 		
 //		for(Product prod : inventory.getListOfProducts()) {
 //			System.out.println("Available: " + prod.getAvailable());
@@ -112,15 +115,15 @@ public class Client {
 //			System.out.println(prod);
 //		}
 			
-			orderList.reset(); //Resets the postion on the OrderList.
-		while(orderList.hasNext()) {
-			Order order = orderList.next();
-			//order.changeStatusToShipped();
-
-			System.out.println("Order status: " + order.getStatus());
-		}
+			 //Resets the postion on the OrderList.
+//		while(orderList.hasNext()) {
+//			Order order = orderList.next();
+//			//order.changeStatusToShipped();
+//
+//			System.out.println("Order status: " + order.getStatus());
+//		}
 		
-		List<Product> listcart1 = order1.getCart().getProducts();
+//		List<Product> listcart1 = order1.getCart().getProducts();
 		
 		System.out.println("");
 		
@@ -131,30 +134,24 @@ public class Client {
 		
 		System.out.println("");
 		
-		for(Product prod : order1.getCart().getProducts()) {
-			System.out.println(prod.getAvailable());
-			System.out.println("Type: " + prod.getProductType());
-		}
-		
-		System.out.println("");
-		
-		for(Product prod : order2.getCart().getProducts()) {
-			System.out.println(prod.getAvailable());
-		};
+//		for(Product prod : order1.getCart().getProducts()) {
+//			System.out.println(prod.getAvailable());
+//			System.out.println("Type: " + prod.getProductType());
+//		}
+//		
+//		System.out.println("");
+//		
+//		for(Product prod : order2.getCart().getProducts()) {
+//			System.out.println(prod.getAvailable());
+//		};
 //		System.out.println(order1.getOrderId());
 //		System.out.println(order2.getOrderId());
-		order1.attach(shippingObs);
-		order1.attach(statusObs);
-		order2.attach(statusObs);
 		
 		order1.getCart().removeProductFromCart(2, 5);
 		order1.getCart().removeProductFromCart(2, 3);
-		for(Product prod : inventory.getListOfProducts()) {
-			System.out.println(prod.getAvailable());
-			System.out.println("Type: " + prod.getProductType());
-		}
-		
-		System.out.println(order1.getShipping());
-		System.out.println(order1.getShipping());
+//		for(Product prod : inventory.getListOfProducts()) {
+//			System.out.println(prod.getAvailable());
+//			System.out.println("Type: " + prod.getProductType());
+//		}
 	}
 }

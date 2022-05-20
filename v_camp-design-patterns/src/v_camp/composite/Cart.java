@@ -59,23 +59,20 @@ public class Cart {
 	
 	public void removeProductFromCart(int sku, int quantity) {
 		ProductInventory inventory = ProductInventory.getInstance();
-		List<Product> p = new ArrayList<>();
-		AtomicInteger count = new AtomicInteger(0);
+		int count = 0, size = products.size();
 		
-		products.forEach(product->{
-			if(product.getSku() == sku && count.get() < quantity) {
-				inventory.unblockProductsFromStock(sku, 1);
-				count.incrementAndGet();
-				observers.forEach(o->o.updated(product, REMOVED));
-			}
-			else {
-				p.add(product);
-			}
-		});
-		if(count.get() != quantity) {
-			System.out.println("Could not remove desired quantity.");
+		for(int i = 0; i < size; i++){
+		    Product product = products.get(i-count);
+		    if(count < quantity && product.getSku() == sku){
+		        inventory.unblockProductsFromStock(sku,1);
+		        observers.forEach(o->o.updated(product, REMOVED));
+		        products.remove(i-count);
+		        count++;
+		    }
 		}
-		products = p;
+		if(count != quantity){
+		    System.out.println("Could not remove desired quantity");
+		}
 	}
 	
 	public List<Product> getProducts() {

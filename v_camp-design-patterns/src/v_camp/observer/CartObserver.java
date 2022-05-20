@@ -19,5 +19,7 @@ public class CartObserver {
 		}
 		
 		System.out.println(phrase);
+		
+		BackOffice.renderOrderList();
 	}
 }
