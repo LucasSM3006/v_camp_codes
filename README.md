@@ -1,7 +1,7 @@
 # v_camp_codes
 
 This is an exercise made for V_Camp.
-It's purpose is to test our knowledge in the SOLID principles and multiple design patterns.
+Its purpose is to test our knowledge in the SOLID principles and multiple design patterns.
 These are the patterns we have to apply in this exercise:
 - Builder
 - Singleton
@@ -31,7 +31,7 @@ We, as the platform's developers, must develop a simple simulation/use case of t
 
 **Factory** - The factory package is responsible for handling the shipping logic. Inside it there are a few classes.
 Aero, AeroShippingCreator, Road, RoadShippingCreator, Shipping, and ShippingCreator. Aero and Road are two classes which you should instantiate, they implement Shipping. The Creators will instantiate a brand new Road or Aero object. And the ShippingCreator...
-To utilize it, you use it's static method, "getShipping", to get an instance of the shipping. The instance returned will depend on the parameter, totalWeight. If the totalWeight is over 10 kilos, the shipping method returned will be "Road", otherwise, it will be "Aero.".
+To utilize it, you use its static method, "getShipping", to get an instance of the shipping. The instance returned will depend on the parameter, totalWeight. If the totalWeight is over 10 kilos, the shipping method returned will be "Road", otherwise, it will be "Aero.".
 
 **Iterator** - There are two classes here, Iterator and OrderList. Iterator is a generic interface, and OrderList is a class which is not only an Iterator but also a Singleton, thus, it cannot be instantiated. OrderList will allow you to get it back via a get method, and also iterate through the list of Orders residing inside it. It also provides a method to reset the list of orders.
 
