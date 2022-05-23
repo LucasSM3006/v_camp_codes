@@ -16,7 +16,7 @@ These are the patterns we have to apply in this exercise:
 A brief description of the scenario:
 
 It's a made-up e-commerce/commerce platform and it will have to do and follow certain rules.
-We, as the platforms developers, must develop a simple simulation/use case of the project.
+We, as the platform's developers, must develop a simple simulation/use case of the project.
 
 # What you will find in the folders/packages.
 **Builder** - This package contains the builders which will build the products. You don't have to use them, you can just create products one by one, but you can automate the process with a loop or use a director via these builders.
