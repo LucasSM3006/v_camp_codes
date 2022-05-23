@@ -36,6 +36,7 @@ public class SkirtBuilder implements Builder {
 	}
 	
 	public Skirt getResult() {
+		if(weight == 0 || price == 0 || sku == 0 || size == 0 || brand == null) throw new NullPointerException("Null values for skirt.");
 		return new Skirt(weight, price, sku, ProductType.Skirt,size, brand);
 	}
 }
