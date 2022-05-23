@@ -23,7 +23,7 @@ We, as the platform's developers, must develop a simple simulation/use case of t
 Starting with the instructions... Simply click "Code" and then "Download Zip".
 Put the project into Eclipse, VSC, any other IDE, or just compile the code, and then run the "Client", which is the main method.
 
-If you're unsure on how to compile java files, use the command "javac" on the command prompt.. If you're still unsure, this short video [How to Compile Java Code From Command Prompt](https://youtu.be/zBF1M8dTftk) should show you how.
+If you're not familiar with compiling java files, use the command "javac" on the command prompt. This short video [How to Compile Java Code From Command Prompt](https://youtu.be/zBF1M8dTftk) should show you how.
 
 **OBS. The test package is completely useless, only utilized for unit testing the project.**
 
