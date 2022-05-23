@@ -8,6 +8,7 @@ public class ShippingObserver implements Observer {
 
 	@Override
 	public void updated(Order order) {
+		if(order == null) throw new NullPointerException("Order parameter cannot be null.");
 		Cart ordrCart = order.getCart();
 		Shipping ordrShipping = ordrCart.getShippingMethod();
 		

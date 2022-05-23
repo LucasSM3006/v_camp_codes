@@ -5,6 +5,7 @@ import v_camp.builder.entities.Product;
 public class CartObserver {
 
 	public void updated(Product product, int type) {
+		if(product == null) throw new NullPointerException("Product is Null.");
 		String phrase = "Cart updated: " + product.getProductType();
 		
 		switch(type) {
