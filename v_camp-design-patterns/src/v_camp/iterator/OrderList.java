@@ -44,4 +44,8 @@ public class OrderList implements Iterator {
 	public void reset() {
 		this.position = 0;
 	}
+	
+	public void resetOrders() {
+		orders.removeAll(orders);
+	}
 }
