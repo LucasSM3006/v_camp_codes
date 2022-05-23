@@ -54,7 +54,7 @@ public class Order {
 	
 	public void changeStatusToPaid() {
 		if(this.status == "Paid");
-		else {
+		else if(this.status == "Pending") {
 			this.status = "Paid";
 			
 			for(Product prod : products) {
@@ -67,7 +67,7 @@ public class Order {
 	
 	public void changeStatusToShipped() {
 		if(this.status == "Shipped");
-		else {
+		else if(this.status == "Paid") {
 			this.status = "Shipped";
 			
 			for(Product prod : products) {
@@ -80,7 +80,7 @@ public class Order {
 	
 	public void changeStatusToCompleted() {
 		if(this.status == "Completed");
-		else {
+		else if(this.status == "Shipped"){
 			this.status = "Completed";
 			
 			observers.forEach(o->o.updated(this));
@@ -89,7 +89,9 @@ public class Order {
 	
 	public void changeStatusToCancelled() {
 		if(this.status == "Cancelled");
-		else {
+		if(this.status == "Shipped") System.out.println("Could not cancel order, already shipped. Contact Courier.");
+		if(this.status == "Completed") System.out.println("Could not cancel order, already completed.");
+		else if(this.status == "Paid" || this.status == "Pending") {
 			this.status = "Cancelled";
 			
 			for(Product prod : products) {
@@ -102,10 +104,6 @@ public class Order {
 
 	public Cart getCart() {
 		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
 	}
 
 	public Shipping getShipping() {
@@ -122,5 +120,9 @@ public class Order {
 	
 	public int getOrderId() {
 		return this.orderId;
+	}
+	
+	public void resetId() {
+		staticId = 1;
 	}
 }
