@@ -19,6 +19,9 @@ It's a made-up e-commerce/commerce platform and it will have to do and follow ce
 We, as the platform's developers, must develop a simple simulation/use case of the project.
 
 # What you will find in the folders/packages.
+
+Obs. "Client" is where the main method is located at, and while it has some logic and what not which will make the program work just fine, you're not actually required to use it, and so you may modify it to suit your needs.
+
 **Builder** - This package contains the builders which will build the products. You don't have to use them, you can just create products one by one, but you can automate the process with a loop or use a director via these builders.
 
 **Singleton** - The class **"ProductInventory"** resides here. It's responsible for holding our products. Its methods allow you to... Get the instance, add a product of the 'Product' class, get a list of the products, get a single product, remove multiple items from the inventory based on their SKU, block products from the stock (Changes boolean 'available' in the Products), unblock products from the inventory, and finally, reset the inventory.
