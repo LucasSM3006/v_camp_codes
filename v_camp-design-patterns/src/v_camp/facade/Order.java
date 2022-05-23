@@ -57,10 +57,6 @@ public class Order {
 		else if(this.status == "Pending") {
 			this.status = "Paid";
 			
-			for(Product prod : products) {
-				productInventory.blockProductsFromStock(prod.getSku(), 1);
-			}
-			
 			observers.forEach(o->o.updated(this));
 		}
 	}
