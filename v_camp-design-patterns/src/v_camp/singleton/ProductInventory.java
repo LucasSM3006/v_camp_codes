@@ -18,7 +18,8 @@ public class ProductInventory {
 	private static List<Product> products = new ArrayList<Product>();
 	
 	public void addProduct(Product product) {
-		this.products.add(product);
+		if(product == null) throw new NullPointerException("Product sent to add is null.");
+		products.add(product);
 	}
 	
 	public List<Product> getListOfProducts() {
@@ -26,45 +27,46 @@ public class ProductInventory {
 	}
 	
 	public Product getProduct(int sku) {
-		for(Product prod : products) {
-			if(prod.getSku() == sku) {
-				if(prod.getAvailable() == true) {
-					return prod;
-				}
-				else {
-					continue;
+		if(products.isEmpty()) throw new NullPointerException("Inventory is empty, add products.");
+		else {
+			for(Product prod : products) {
+				if(prod.getSku() == sku) {
+					if(prod.getAvailable() == true) {
+						return prod;
+					}
+					else {
+						continue;
+					}
 				}
 			}
 		}
-		return null;
+		throw new NullPointerException("No products with specified SKU found.");
 	}
 	
 	public void removeProductsFromStock(int sku, int quantity) {
-//		List<Product> productsToRemove = new ArrayList<Product>();
-		int count = 0;
-		//Goes through the products list and finds the same sku.
-		for(Product prod : products) {
-			if(count == quantity) break;
-			if(prod.getSku() == sku) {
-				if(prod.getAvailable() == false) {
-					products.remove(prod);
-					break;
-				}
-			}
+		if(products.isEmpty()) throw new NullPointerException("Inventory is empty.");
+		ProductInventory inventory = ProductInventory.getInstance();
+		int count = 0, size = products.size();
+		
+		for(int i = 0; i < size; i++){
+		    Product product = products.get(i-count);
+		    if(product.getAvailable() == false && count < quantity && product.getSku() == sku){
+		        products.remove(i-count);
+		        count++;
+		    }
 		}
-//		for(Product prod : products) {
-//			if (productsToRemove.size() == quantity) {
-//				break;
-//			}
-//			if(prod.getSku() == sku) {
-//				productsToRemove.add(prod);
-//			}
-//		}
-//		products.removeAll(productsToRemove);
+		if(count != quantity){
+			if(count == 0) System.out.println("Could not remove desired quantity.");
+			else System.out.println("Removed units, but could not remove desired quantity.");
+		}
 	}
 	
 	public void blockProductsFromStock(int sku, int quantity) {
 		int count = 0;
+		
+		if(products.isEmpty()) {
+			throw new NullPointerException("Inventory is empty, add products.");
+		}
 		
 		for(Product prod : products) {
 			if(count == quantity) break;
@@ -79,6 +81,10 @@ public class ProductInventory {
 	public void unblockProductsFromStock(int sku, int quantity) {
 		int count = 0;
 		
+		if(products.isEmpty()) {
+			throw new NullPointerException("Inventory is empty, add products.");
+		}
+		
 		for(Product prod : products) {
 			if(count == quantity) break;
 			if(prod.getAvailable() == true) continue;
@@ -87,5 +93,9 @@ public class ProductInventory {
 				count++;
 			}
 		}
+	}
+	
+	public void resetInventory() {
+		products.removeAll(products);
 	}
 }
