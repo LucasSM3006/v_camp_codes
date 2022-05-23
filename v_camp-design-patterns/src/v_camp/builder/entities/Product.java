@@ -9,6 +9,7 @@ public class Product {
 	
 	public Product(double weight, double price, int sku, ProductType type) {
 		super();
+		if(weight == 0 || price == 0 || sku == 0 || type == null) throw new NullPointerException("Null values for product.");
 		this.weight = weight;
 		this.price = price;
 		this.sku = sku;

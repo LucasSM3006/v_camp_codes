@@ -6,6 +6,7 @@ public class Skirt extends Product {
 
 	public Skirt(double weight, double price, int sku, ProductType type, int size, String brand) {
 		super(weight, price, sku, type);
+		if(weight == 0 || price == 0 || sku == 0 || type == null || size == 0 || brand == null) throw new NullPointerException("Null values for skirt.");
 		this.size = size;
 		this.brand = brand;
 	}
@@ -17,16 +18,4 @@ public class Skirt extends Product {
 	public String getBrand() {
 		return this.brand;
 	}
-	
-	public String printInfo() {
-		String info = "Skirt info: " + "\n";
-        info += "Weight: " + this.getWeight() + "\n";
-        info += "Price: " + this.getPrice() + "\n";
-        info += "Sku: " + this.getSku() + "\n";
-        info += "Size: " + getSize() + "\n";
-        info += "Brand: " + getBrand() + "\n";
-        
-        return info;
-	}
-
 }

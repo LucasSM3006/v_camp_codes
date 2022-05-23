@@ -6,6 +6,7 @@ public class Book extends Product {
 	
 	public Book(double weight, double price, int sku, ProductType type, String bookName, int pageCount) {
 		super(weight, price, sku, type);
+		if(weight == 0 || price == 0 || sku == 0 || type == null || bookName == null || pageCount == 0) throw new NullPointerException("Null values for book.");
 		this.bookName = bookName;
 		this.pageCount = pageCount;
 	}
@@ -16,16 +17,5 @@ public class Book extends Product {
 	
 	public int getPageCount() {
 		return pageCount;
-	}
-	
-	public String printInfo() {
-		String info = "Book info: " + "\n";
-        info += "Weight: " + this.getWeight() + "\n";
-        info += "Price: " + this.getPrice() + "\n";
-        info += "Sku: " + this.getSku() + "\n";
-        info += "Name: " + getBookName() + "\n";
-        info += "Pages: " + getPageCount() + "\n";
-        
-        return info;
 	}
 }
