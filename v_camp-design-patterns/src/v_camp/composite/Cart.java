@@ -33,9 +33,10 @@ public class Cart {
 	
 	public void addProductToCart(Product product) {
 		if(product == null) {
-			System.out.println("Stock is out.");
+			System.out.println("Non existent product.");
 		}
 		else if(product.getAvailable() == false) {
+			System.out.println("Could not add product to cart. Unavailable.");
 			return;
 		}
 		else {
@@ -44,18 +45,6 @@ public class Cart {
 			observers.forEach(o->o.updated(product, ADDED));
 		}
 	}
-	
-//	public void removeProductFromCart(Product product) {
-//		ProductInventory inventory = ProductInventory.getInstance();
-//		
-//		for(int i = 0; i < products.size(); i++) {
-//			if(product.getSku() == products.get(i).getSku()) {
-//				inventory.unblockProductsFromStock(product.getSku(), 1);
-//			}
-//		}
-//		
-//		products.remove(product);
-//	}
 	
 	public void removeProductFromCart(int sku, int quantity) {
 		ProductInventory inventory = ProductInventory.getInstance();
@@ -71,7 +60,7 @@ public class Cart {
 		    }
 		}
 		if(count != quantity){
-		    System.out.println("Could not remove desired quantity");
+		    System.out.println("Removed units, but could not remove desired quantity.");
 		}
 	}
 	
