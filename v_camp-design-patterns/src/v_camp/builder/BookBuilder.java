@@ -36,6 +36,7 @@ public class BookBuilder implements Builder {
 	}
 	
 	public Book getResult() {
+		if(weight == 0 || price == 0 || sku == 0 || bookName == null || pageCount == 0) throw new NullPointerException("Null values for book.");
 		return new Book(weight, price, sku, ProductType.Book, bookName, pageCount);
 	}
 }

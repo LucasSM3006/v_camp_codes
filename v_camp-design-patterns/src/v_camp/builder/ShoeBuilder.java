@@ -36,6 +36,7 @@ public class ShoeBuilder implements Builder {
 	}
 	
 	public Shoe getResult() {
+		if(weight == 0 || price == 0 || sku == 0 || sizeUS == 0 || material == null) throw new NullPointerException("Null values for shoe.");
 		return new Shoe(weight, price, sku, ProductType.Shoe, sizeUS, material);
 	}
 }

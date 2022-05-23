@@ -36,6 +36,7 @@ public class ComputerBuilder implements Builder {
 	}
 	
 	public Computer getResult() {
+		if(weight == 0 || price == 0 || sku == 0 || cpu == null || gpu == null) throw new NullPointerException("Null values for computer.");
 		return new Computer(weight, price, sku,ProductType.Computer ,cpu, gpu);
 	}
 }
