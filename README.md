@@ -18,9 +18,12 @@ A brief description of the scenario:
 It's a made-up e-commerce/commerce platform and it will have to do and follow certain rules.
 We, as the platform's developers, must develop a simple simulation/use case of the project.
 
-# What you will find in the folders/packages.
+# What you will find in the folders/packages. (Instructions to download too.)
 
-Obs. "Client" is where the main method is located at, and while it has some logic and what not which will make the program work just fine, you're not actually required to use it, and so you may modify it to suit your needs.
+Starting with the instructions... Simply click "Code" and then "Download Zip".
+Put the project into Eclipse, VSC, any other IDE, or just compile the code, and then run the "Client", which is the main method.
+
+_Obs. "Client" has some logic and what not which will make the program work just fine, but you're not actually required to use it, and so you may modify it to suit your needs._
 
 **Builder** - This package contains the builders which will build the products. You don't have to use them, you can just create products one by one, but you can automate the process with a loop or use a director via these builders.
 
